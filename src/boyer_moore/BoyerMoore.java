@@ -82,7 +82,10 @@ public class BoyerMoore {
 			}
 		}
 		
-		if(debug) printAlignment(k);
+		if(debug){
+			printAlignment(k);
+			System.out.print("\n");
+		}
 		
 		return ris;
 	}
@@ -257,7 +260,6 @@ public class BoyerMoore {
 			System.out.print(" ");
 		}
 		System.out.println(this.getPattern());
-		System.out.print("\n");
 	}
 	
 	public int getLengthPattern(){
