@@ -52,7 +52,7 @@ public class BoyerMoore {
 			if(i==0){ // ho trovato un match
 				ris.add(new Integer(k));
 				k += n - l[2]; // allineo il più lungo prefisso di P che sia anche suffisso di P stesso abcxabc
-				System.out.print("gs=" + (n - l[2]) + " bc=" + 1 + "\n\n");
+				System.out.println("gs=" + (n - l[2]) + " bc=" + 1);
 				
 			}else{ // ho un mismatch
 				char mismatch = T[h];
@@ -78,14 +78,12 @@ public class BoyerMoore {
 				int sgs_shift = (i == n) ? 1 : ( L[i+1] > 0 ? (n - L[i+1]) : (n - l[i+1]) ); 
 				
 				k += Math.max(ebc_shift, sgs_shift);
-				System.out.print("gs=" + sgs_shift + " bc=" + ebc_shift + "\n\n");				
+				System.out.println("gs=" + sgs_shift + " bc=" + ebc_shift);				
 			}
 		}
 		
-		if(debug) {
-			printAlignment(k);
-			System.out.println("");
-		}
+		if(debug) printAlignment(k);
+		
 		return ris;
 	}
 	
@@ -248,6 +246,7 @@ public class BoyerMoore {
 	}
 	
 	private void printAlignment(int k){
+		System.out.print("\n");
 		System.out.print("   ");
 		for(int i=1; i<=m; ++i)
 			System.out.print(i%10);
@@ -258,7 +257,7 @@ public class BoyerMoore {
 			System.out.print(" ");
 		}
 		System.out.println(this.getPattern());
-		//System.out.println("");
+		System.out.print("\n");
 	}
 	
 	public int getLengthPattern(){
