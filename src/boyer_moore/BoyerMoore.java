@@ -27,19 +27,11 @@ public class BoyerMoore {
 	 * 
 	 * @return un array d'interi con le posizoini di match
 	 */
-	public int[] search(String text, String pattern){
-		return search(text, pattern, false, 'b');
+	public Vector<Integer> search(String text, String pattern){
+		return search(text, pattern, false);
 	}
 	
-	public int[] search(String text, String pattern, boolean debug){
-		return search(text, pattern, debug, 'b');
-	}
-	
-	/* mode: e=Extended Bad Character 
-			 s=Strong Good Suffix 
-			 b=best
-	*/
-	public int[] search(String text, String pattern, boolean debug, char mode){
+	public Vector<Integer> search(String text, String pattern, boolean debug){
 		init(pattern, text);
 		
 		badCharacterRulePreprocess();
@@ -59,25 +51,8 @@ public class BoyerMoore {
 			}
 			if(i==0){ // ho trovato un match
 				ris.add(new Integer(k));
-				
-				switch (mode){
-				case 'e':
-					k += 1; // in caso di match mi sposto di 1 con la regola del extended bad character
-					System.out.print("bc=" + 1 + "\n\n");
-					break;
-				case 's':
-					k += n - l[2];
-					System.out.print("gs=" + (n - l[2]) + "\n\n");
-					break;
-				case 'b':
-					k += n - l[2]; // allineo il più lungo prefisso di P che sia anche suffisso di P stesso abcxabc
-					System.out.print("gs=" + (n - l[2]) + " bc=" + 1 + "\n\n");
-					break;
-				default:
-					k += n - l[2];
-					break;
-				}
-				
+				k += n - l[2]; // allineo il più lungo prefisso di P che sia anche suffisso di P stesso abcxabc
+				System.out.print("gs=" + (n - l[2]) + " bc=" + 1 + "\n\n");
 				
 			}else{ // ho un mismatch
 				char mismatch = T[h];
@@ -102,24 +77,8 @@ public class BoyerMoore {
 				 */
 				int sgs_shift = (i == n) ? 1 : ( L[i+1] > 0 ? (n - L[i+1]) : (n - l[i+1]) ); 
 				
-				switch (mode){
-				case 'e':
-					k += ebc_shift; // in caso di mismatch uso solo EBC per shiftare k
-					System.out.print("bc=" + ebc_shift + "\n\n");
-					break;
-				case 's':
-					k += sgs_shift;
-					System.out.print("gs=" + sgs_shift + "\n\n");
-					break;
-				case 'b':
-					k += Math.max(ebc_shift, sgs_shift);
-					System.out.print("gs=" + sgs_shift + " bc=" + ebc_shift + "\n\n");
-					break;
-				default:
-					k += Math.max(ebc_shift, sgs_shift);
-					break;
-				}
-				
+				k += Math.max(ebc_shift, sgs_shift);
+				System.out.print("gs=" + sgs_shift + " bc=" + ebc_shift + "\n\n");				
 			}
 		}
 		
@@ -127,14 +86,7 @@ public class BoyerMoore {
 			printAlignment(k);
 			System.out.println("");
 		}
-		
-		int ret[] = new int[ris.size()];
-		int i=0;
-		for(Integer current : ris){
-			ret[i]=current.intValue();
-			++i;
-		}
-		return ret;
+		return ris;
 	}
 	
 	private void init(String pattern, String text){
