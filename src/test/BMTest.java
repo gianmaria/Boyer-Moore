@@ -12,8 +12,8 @@ public class BMTest {
 		
 		if(args.length==2){
 			text = args[0];
-			if(text.length()<3){
-				System.out.println("Il Testo deve essere lungo almeno 3 caratteri");
+			if(text.length()<2){
+				System.out.println("Il Testo deve essere lungo almeno 2 caratteri");
 				System.exit(-1);
 			}
 			pattern = args[1];
@@ -26,8 +26,8 @@ public class BMTest {
 		
 		BoyerMoore bm = new BoyerMoore();
 		try{
-			Vector<Integer> ris = bm.search(text, pattern, true); // stampo gli allineamenti per debug
-			System.out.println(bm.getDebugInfo());
+			Vector<Integer> ris = bm.search(text, pattern); // stampo gli allineamenti per debug
+			//System.out.println(bm.getDebugInfo());
 			
 			printResultSearch(ris, text, pattern);
 		}catch(java.lang.ArrayIndexOutOfBoundsException e){
