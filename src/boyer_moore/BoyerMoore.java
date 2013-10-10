@@ -31,7 +31,7 @@ public class BoyerMoore{
 	 * @throws IOException 
 	 */
 	public Vector<Integer> search(String text, String pattern){
-		if(text.length()<=50 && pattern.length()<=30)
+		if(text.length()<=500 && pattern.length()<=300)
 			return search(text, pattern, true);
 		else
 			return search(text, pattern, false);
@@ -67,8 +67,8 @@ public class BoyerMoore{
 			}
 			if(i==0){ // ho trovato un match
 				ris.add(new Integer(k));
-				k += n - l[2]; // allineo il più lungo prefisso di P che sia anche suffisso di P stesso abcxabc
-				System.out.println("gs=" + (n - l[2]) + " bc=" + 1);
+				k += (n - l[2]); // allineo il più lungo prefisso di P che sia anche suffisso di P stesso abcxabc
+				System.out.println("gs=" + (n - l[2]) + " bc=" + 1 + " *");
 				
 			}else{ // ho un mismatch
 				caratteri_verificati+=2;
@@ -159,7 +159,7 @@ public class BoyerMoore{
 		
 		ret.append("i:  ");
 		for(int i=1; i<=n; ++i){
-			ret.append( (i % 10) + " ");
+			ret.append( (i % 10) + "   ");
 		}
 		ret.append("\n");
 		
@@ -188,14 +188,14 @@ public class BoyerMoore{
 	private String print(String s){
 		StringBuilder sb = new StringBuilder();
 		for(int i=0; i<s.length(); ++i)
-			sb.append(s.charAt(i) + " ");
+			sb.append(s.charAt(i) + "   ");
 		return sb.toString();
 	}
 	
 	private String print(int v[]){
 		StringBuilder sb = new StringBuilder();
 		for(int i=1; i<v.length; ++i)
-			sb.append( (v[i] == 0) ? "- " : v[i] + " ");
+			sb.append( (v[i] == 0) ? "-   " : v[i] + "   ");
 		return sb.toString();
 	}
 	
@@ -270,7 +270,7 @@ public class BoyerMoore{
 	 *In caso di mismatch al primo confronto P[n] contro T[k] shifto P di 1 posizione
 	 * 
 	 * 4. se si raggiunge un match di P, spostare P verso destra in modo che un prefisso proprio di P, 
-	 *    P[1..n-1] matchi un suffisso dell'occorrenza di P in T, se non è possibile shiftare P di n posizioni.
+	 *    matchi un suffisso dell'occorrenza di P in T, se non è possibile shiftare P di n posizioni.
 	 *       
 	 *      T: cbaagbcbaa....
 	 *      P: cbaagbcbaa
@@ -381,7 +381,7 @@ public class BoyerMoore{
 			L[i]=0;
 		
 		for(int j=1; j<=n-1; ++j){
-			int i= n - N[j] + 1;
+			int i = n - N[/*(n-j)+1*/ j] + 1;
 			if(i<=n) // quando Nj[i]=0 ho un problema di indici dato che n-0+1 > n
 				L[i]=j;
 		}
@@ -397,23 +397,46 @@ public class BoyerMoore{
 	 */
 	private void process_minusl() {
 		l[0]=-1;
-		
+		int count=0;
 		for(int i=1; i<=n; ++i){
 			l[i]=0;
-			for(int j=(n-i+1); j>=1; --j){
-				if(N[j]==j){
+			for(int j=(n-i)+1; j>=1; --j){
+				++count;
+				if(N[/*(n-j)+1*/ j]==j){
 					l[i]=j;
 					break; // vogliamo solo il più grande Nj che sia uguale a j
 				}
 			}
 		}
-		
+		System.out.println("count: " + count);
 		if(l[0]!=-1) System.exit(-1);
 	}
+	
+//	private void process_minusl() {
+//		l[0]=-1;
+//		int last=0;
+//		for(int j=n; j>=1; --j){
+//			int pos=(n-j)+1;
+//			if(N[j]==pos){
+//				l[j]=N[j];
+//				last = N[j];
+//			}else{
+//				l[j]=last;
+//			}
+//		}
+//		if(l[0]!=-1) System.exit(-1);
+//	}
+	
+	
+	
 	//----------- GOOD SUFFIX ------------
 	
 	//--------- METODI ACCESSORI ---------
 }
+
+
+
+
 
 
 

@@ -7,8 +7,11 @@ import boyer_moore.BoyerMoore;
 public class BMTest {
 
 	public static void main(String[] args) {
-		String text = "GCATCGCAGAGAGTATACAGTACG";		
-		String pattern="GCAGAGAG";
+//		String text = "gcatcgcagagagtatacagtacg";		
+//		String pattern="gcagagag";
+		String text = "cbaagbcbaagb";		
+		String pattern="cbaagbcbaa";
+		
 		
 		if(args.length==2){
 			text = args[0];
